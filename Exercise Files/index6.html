@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+    <!-- jQuery, jQuery.ui -->
+    <link href="https://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.min.css" rel="stylesheet" type="text/css" />
+    <script src="https://code.jquery.com/jquery.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
+
+    <!-- Bootstrap -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+
+
+    <!-- React -->
+       <script src="../react.js"></script>
+        <script src="../trans.js"></script>
+
+    <!--Custom Styles -->
+    <link href="css/style.css" rel="stylesheet" type="text/css" />
+    <title>React Bulletin Board</title>
+</head>
+<body>
+    <div id="react-container"></div>
+    <script  type="text/jsx" >
+
+   var Note = React.createClass({
+    edit: function() {
+        alert('editing note'+ this.props.alert);
+    },
+    remove: function() {
+        alert('removing note'+ this.props.alert);
+    },
+    render: function() {
+        return (
+  <div className="container">
+       <div class="jumbotron">
+        <div class="container">
+          <h1>{this.props.children}</h1>
+             <p>This is a template for a simple marketing or informational website. It includes a large callout called a jumbotron and three supporting pieces of content. Use it as a starting point to create something more unique.</p>
+            <button onClick={this.edit}
+           className="btn btn-primary glyphicon glyphicon-pencil"/>
+           <button onClick={this.remove}
+           className="btn btn-danger glyphicon glyphicon-trash"/>
+      </div>
+    </div>
+</div>
+            );
+    }
+});
+
+React.render(<Note alert="i am alert box">Hello World</Note>, 
+    document.getElementById('react-container'));
+
+    </script>
+</body>
+</html>
+
+

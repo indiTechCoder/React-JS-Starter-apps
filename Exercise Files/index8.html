@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+    <!-- jQuery, jQuery.ui -->
+    <link href="https://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.min.css" rel="stylesheet" type="text/css" />
+    <script src="https://code.jquery.com/jquery.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
+
+    <!-- Bootstrap -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+
+    <!-- React -->
+      <script src="../react.js"></script>
+        <script src="../trans.js"></script>
+
+    <!--Custom Styles -->
+    <link href="css/style.css" rel="stylesheet" type="text/css" />
+    <title>React Bulletin Board</title>
+</head>
+<body>
+    <div id="react-container" class="container jumbotron"></div>
+    <script type="text/jsx" >
+
+    var Note = React.createClass({
+    getInitialState: function() {
+        return {editing: false , text : ''}
+    },
+    edit: function() {
+        this.setState({editing: true});
+    },
+    save: function() {
+        this.setState({editing: false});
+        var val = this.refs.newText.getDOMNode().value;
+        this.setState({text: val});
+    },
+    remove: function() {
+        alert('removing note');
+        this.setState({editing: false});
+        this.setState({text: ''});
+    },
+    renderDisplay: function() {
+        return (
+            <div className="note">
+                <p>{this.state.text} </p>
+                <span>
+                    <button onClick={this.edit} name="Edit" value="Edit"
+                            className="btn btn-primary glyphicon glyphicon-pencil"/>
+                    <button onClick={this.remove} name="Delete" value="delete"
+                            className="btn btn-danger glyphicon glyphicon-trash"/>
+                </span>
+            </div>
+            );
+    },
+    renderForm: function() {
+        return (
+            <div className="note">
+            <textarea ref="newText"  defaultValue={this.props.children} 
+            className="form-control"></textarea>
+            <button onClick={this.save} className="btn btn-success btn-sm glyphicon glyphicon-floppy-disk" />
+            </div>
+            )
+    },
+    render: function() {
+        if (this.state.editing) {
+            return this.renderForm();
+        }
+        else {
+            return this.renderDisplay();
+        }
+    }
+});
+
+React.render(<Note>Hello World from TextArea</Note>, 
+    document.getElementById('react-container'));
+
+    </script>
+</body>
+</html>

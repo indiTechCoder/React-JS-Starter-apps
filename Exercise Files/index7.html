@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+    <head>
+      <script src="../react.js"></script>
+        <script src="../trans.js"></script>
+
+    <!-- Bootstrap -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+        <title>React Components</title>
+    </head>
+    <body>
+    <div id="react-container"  class="container well"></div>
+    <script type="text/jsx">
+        var Checkbox = React.createClass({
+            getInitialState: function() {
+                return {checked: true}
+            },
+            handleCheck: function() {
+                this.setState({checked: !this.state.checked})
+            },
+            render: function() {
+                var msg;
+                if(this.state.checked) {
+                    msg = "checked";
+                }
+                else {
+                    msg = "unchecked";
+                }
+                return (
+
+      <div>
+        <div>
+          <h1 class="container well">hello react</h1>
+             
+             <input type="checkbox"
+              defaultChecked={this.state.checked} onChange={this.handleCheck}/>
+                        <p>This box is {msg}.</p>
+      </div>
+    </div>
+   );
+            }
+        });
+
+        React.render(<Checkbox/>,
+            document.getElementById('react-container'));
+    </script>
+    </body>
+</html>

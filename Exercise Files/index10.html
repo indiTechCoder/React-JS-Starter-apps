@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>React ToDo</title>
+	 <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="app" class="container jumbotron"></div>
+
+ <script src="../react.js"></script>
+ <script src="../trans.js"></script>
+
+
+   <script type="text/jsx">
+
+
+
+ var App = React.createClass({
+ 	getDefaultProps: function(){
+ 		return {
+ 			todos: [{
+ 				label: 'Task 1'
+ 			}, {
+ 				label: 'Task 2'
+ 			}]
+ 		};
+ 	},
+
+ 	render: function() {
+ 		return (
+ 			<Todo todos={this.props.todos} />
+ 		);
+ 	}
+ });
+
+ var Todo = React.createClass({
+ 		getInitialState: function(){
+ 			return {
+ 				todos: this.props.todos
+ 			};
+ 		},
+ 		handleAdd: function(item){
+ 			var todos= this.state.todos;
+ 			todos.unshift({label: item});
+ 			this.setState({
+ 				todos: todos
+ 			});
+ 		},
+ 		handleRemove: function(item, index){
+ 			var todos = this.state.todos;
+ 			todos.splice(index, 1);
+ 			this.setState({
+ 				todos: todos
+ 			});
+ 		},
+ 		render: function() {
+ 			return (
+ 				<div>
+ 					<h1>Todos ({this.state.todos.length})</h1>
+ 					<TodoInput addTodo={this.handleAdd} />
+ 					<TodoList todos={this.state.todos} removeTodo={this.handleRemove} />
+ 					</div>
+ 			);
+ 		}, 	
+ });
+
+
+ var TodoInput = React.createClass({
+	getInitialState: function(){
+		return {
+			value: ''
+		};
+	},
+	handleSubmit: function(event){
+		event.preventDefault();
+		this.props.addTodo(this.state.value);
+		this.setState({
+			value: ''
+		})
+	},
+	handleChange: function(event){
+		this.setState({
+			value: event.target.value
+		});
+
+	},
+	render: function(){
+		return(
+				<form onSubmit={this.handleSubmit}>
+				<input type="text" className="form-control" required="required" onChange={this.handleChange} value={this.state.value} />
+				<button className="btn form-control btn-primary" type="submit">Add</button>
+				</form>
+			);
+	}
+});
+
+var TodoList = React.createClass({
+	removeTodo: function(item, index){
+		this.props.removeTodo(item,index);
+	},
+	render: function() {
+		var _this = this;
+		var todoList = function(item, index)
+		{
+			return (
+				<li key={index}>
+				{item}
+				<span onClick={_this.removeTodo.bind(_this, item, index)}> [Remove Task]</span>
+				</li>
+				);
+		};
+
+		return (
+			<ul> {this.props.todos.map(todoList)} </ul>
+			);
+	}
+})
+
+React.render(<App />, document.getElementById('app'));
+  </script>
+</body>
+</html>
